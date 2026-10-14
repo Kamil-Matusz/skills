@@ -1,19 +1,15 @@
 ---
 name: skill-audit
 description: Security audit of a third-party skill (a directory with SKILL.md), agent plugin or MCP server before installing it. Checks for descriptions that hijack invocations, hidden characters and instructions, scripts that use the network, download-and-execute, secret reads, obfuscation, persistence, writes to agent memory or configuration, and symlinks pointing outside the directory. Use when the user wants to install a skill from the internet, a marketplace, a GitHub repository or a colleague, and when reviewing skills that are already installed.
-license: CC-BY-4.0
 metadata:
-  author: "<your name>"
+  author: "Kamil Matusz"
   version: "1.0"
-  credits: "Adapted from audyt-skilla by Tomasz Turba (CC-BY-4.0)"
 ---
 
 # Skill audit before installation
 
-A skill is code plus instructions that the agent runs with your permissions. Installing
-one from the internet is like piping a downloaded script straight into your shell, with
-one extra risk: SKILL.md itself is a prompt for the model. The attack does not have to
-live in a script. A single sentence in the description or in a reference file is enough.
+A skill is code plus instructions that the agent runs with your permissions. Installing one from the internet is like piping a downloaded script straight into your shell, with
+one extra risk: SKILL.md itself is a prompt for the model. The attack does not have tolive in a script. A single sentence in the description or in a reference file is enough.
 
 ## Steps
 1. Download the skill into a temporary directory, NEVER into `.claude/skills/` or
@@ -21,10 +17,10 @@ live in a script. A single sentence in the description or in a reference file is
 2. Inventory:
    ```bash
    S=/tmp/skill-audit/<skill>
-   find "$S" -type l -exec ls -l {} \;              # symlinks: any target outside $S = REJECT
-   find "$S" -name '.*' ! -path "$S"                 # hidden files and directories
-   find "$S" -type f -exec file {} \; | grep -vE 'text|JSON|empty'   # binaries
-   sed -n '1,/^---$/p' "$S/SKILL.md" | head -20      # frontmatter
+   find "$S" -type l -exec ls -l {} \;
+   find "$S" -name '.*' ! -path "$S"
+   find "$S" -type f -exec file {} \; | grep -vE 'text|JSON|empty'
+   sed -n '1,/^---$/p' "$S/SKILL.md" | head -20
    ```
 3. Pattern search (read every hit in context):
    ```bash

@@ -1,14 +1,10 @@
 ---
 name: given-when-then-tests
-description: >-
-  Structure Java tests with `//given` / `//when` / `//then` section comments —
-  setup and stubbing under given, the single call under test under when,
-  assertions only under then. Use whenever writing, extending, refactoring or
-  reviewing a Java test: JUnit, Mockito, AssertJ, `@SpringBootTest`,
-  `@DataJpaTest`, `@WebMvcTest`, Testcontainers integration tests. Also use when
-  the user mentions "given/when/then", "arrange/act/assert", "BDD test layout",
-  "test structure" or "test sections". Apply proactively to every test you write,
-  even when the user does not ask about layout.
+description: Structure Java tests with `//given` / `//when` / `//then` section comments — setup and stubbing under given, the single call under test under when, assertions only under then. Use whenever writing, extending, refactoring or reviewing a Java test: JUnit, Mockito, AssertJ, `@SpringBootTest`,`@DataJpaTest`, `@WebMvcTest`, Testcontainers integration tests. Also use when
+the user mentions "given/when/then", "arrange/act/assert", "BDD test layout", "test structure" or "test sections". Apply proactively to every test you write, even when the user does not ask about layout.
+metadata:
+  author: "Kamil Matusz"
+  version: "1.0"
 ---
 
 # `//given` / `//when` / `//then` tests

@@ -1,25 +1,20 @@
 ---
 name: dependency-check
 description: Checks the PyPI or npm registry to confirm that a package the agent wants to add or install actually exists, how old it is, how many releases it has, and whether it runs code at install time. Protects against hallucinated package names (slopsquatting) and typos (typosquatting). Use before pip install, uv add, npm install, pnpm add or yarn add, before adding a dependency to requirements.txt, pyproject.toml or package.json, and when reviewing AI-generated code that imports packages.
-license: CC-BY-4.0
 metadata:
-  author: "<your name>"
+  author: "Kamil Matusz"
   version: "1.0"
-  credits: "Adapted from weryfikacja-zaleznosci by Tomasz Turba (CC-BY-4.0)"
 ---
 
 # Dependency check
 
-Language models invent plausible-sounding package names, and they do it repeatably: the
-same made-up name comes back across many answers. Attackers register those names on
-PyPI and npm with malicious code (slopsquatting). Installing a hallucinated package means
-running a stranger's code with the agent's permissions.
+Language models invent plausible-sounding package names, and they do it repeatably: thesame made-up name comes back across many answers. Attackers register those names on
+PyPI and npm with malicious code (slopsquatting). Installing a hallucinated package meansrunning a stranger's code with the agent's permissions.
 
 ## Steps
 1. Collect the names: from the command you are about to run, and from
    `requirements.txt`, `pyproject.toml` or `package.json`.
 2. Look each one up in the registry.
-
    PyPI (HTTP 404 = the package does not exist):
    ```bash
    N=<name>

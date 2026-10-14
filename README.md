@@ -1,71 +1,84 @@
 # skills
 
-Portable agent skills — conventions and checks you can install once and reuse across projects.
+Portable agent skills: conventions and checks you install once and reuse across projects. They work with Claude Code, Cursor, Codex and any other agent that reads the `SKILL.md` format.
 
-Each skill is a directory with a `SKILL.md` (what the agent should do and when) and usually a short `README.md` (how to install and use it as a human).
+Each skill is a directory with a `SKILL.md`: YAML frontmatter (`name`, `description`) that tells the agent when to use it, followed by the instructions themselves.
 
 ## Skills
+
+### Java / Spring
 
 | Skill | Description |
 |-------|-------------|
 | [gateway-mapping-check](skills/gateway-mapping-check/) | Verify Spring controller endpoints have matching `apiGateway.mappings` in Helm `values.yaml`. |
 | [given-when-then-tests](skills/given-when-then-tests/) | Structure Java tests with `//given` / `//when` / `//then` section comments. |
-| [no-em-dash](skills/no-em-dash/) | Replace em dashes (—) and en dashes (–) with regular hyphens (-) in all written output. |
 | [prefer-final-variables](skills/prefer-final-variables/) | Mark Java variables `final` where it compiles and is meaningful; skip Hibernate/Jackson/Spring proxy pitfalls. |
-| [skills-index](skills/skills-index/) | Keep a `SKILLS.md` catalog in sync when skills are added, renamed, or removed. |
+
+### Security
+
+| Skill | Description |
+|-------|-------------|
+| [dependency-check](skills/dependency-check/) | Confirm a PyPI or npm package exists, check its age, release history and install scripts before adding it. Guards against slopsquatting and typosquatting. |
+| [skill-audit](skills/skill-audit/) | Audit a third-party skill, plugin or MCP server before installing it: hidden instructions, network calls, secret reads, obfuscation, persistence. |
+
+### Agent context
+
+| Skill | Description |
+|-------|-------------|
+| [context-budget](skills/context-budget/) | Measure how many tokens `AGENTS.md`, `CLAUDE.md` and skill descriptions load at startup and suggest what to trim or move. |
+| [no-em-dash](skills/no-em-dash/) | Replace em dashes and en dashes with regular hyphens (`-`) in all written output. |
 
 ## Install
 
-**Via `npx` (recommended)** — install one skill, several, or all, for Cursor / Claude Code / other agents. Full commands: **[INSTALL.md](INSTALL.md)**.
+### Via `npx` (recommended)
+
+Install one skill, several, or all of them for Claude Code, Cursor or other agents. Full command reference: **[INSTALL.md](INSTALL.md)**.
 
 ```bash
 npx skills add Kamil-Matusz/skills --list
 npx skills add Kamil-Matusz/skills --skill prefer-final-variables -g -y
 ```
 
-**Manual copy** — user-level (available in every project):
+### Manual copy
+
+User-level (available in every project):
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r skills/<skill-name> ~/.claude/skills/
+cp -r skills/<skill-name> ~/.claude/skills/   # one skill
+cp -r skills/* ~/.claude/skills/              # all of them
 ```
 
-Example — install all of them:
-
-```bash
-mkdir -p ~/.claude/skills
-cp -r skills/* ~/.claude/skills/
-```
-
-Restart Claude Code (or `/reload`) and confirm with `/skills`.
-
-**Per-project** (pinned in git with that repo):
+Per-project (versioned together with that repo):
 
 ```bash
 mkdir -p <repo>/.claude/skills
 cp -r skills/<skill-name> <repo>/.claude/skills/
 ```
 
-For `gateway-mapping-check`, also make the script executable:
+For Cursor and other agents that use `~/.agents/skills/`, copy into that directory instead.
+
+Restart Claude Code (or run `/reload`) and confirm with `/skills`.
+
+`gateway-mapping-check` ships a script that must be executable, and has its own setup notes in [its README](skills/gateway-mapping-check/README.md):
 
 ```bash
 chmod +x ~/.claude/skills/gateway-mapping-check/scripts/check_mappings.py
 ```
 
-Cursor / other agent layouts that use `~/.agents/skills/` work the same way — copy into that directory instead.
-
 ## How skills trigger
 
-Most skills have no config and no script. Their `description` frontmatter lists triggers, so the agent picks them up when you write tests, touch Java, add an endpoint, or install another skill.
+Most skills need no config and no script. The `description` in the frontmatter lists the situations they apply to, so the agent picks them up on its own: when you write a test, edit Java code, add an endpoint, install a package or pull in a skill from the internet.
 
-You can also invoke a skill explicitly, e.g. `/prefer-final-variables` or `/gateway-mapping-check`.
+You can also invoke a skill explicitly, e.g. `/prefer-final-variables` or `/skill-audit`.
 
 ## Adding a skill
 
-1. Create `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`) and the instructions body.
-2. Add a short `README.md` for install notes if useful.
-3. After install elsewhere, run `skills-index` (or let it fire) so `SKILLS.md` stays accurate.
+1. Create `skills/<name>/SKILL.md` with YAML frontmatter (`name`, `description`, optional `metadata`) and the instructions body.
+2. Write the `description` around triggers: what the skill does and exactly when to use it.
+3. Put helper scripts in `skills/<name>/scripts/` and add a `README.md` only if the skill needs setup beyond copying.
+4. Add a row to the table above.
 
 ## License
 
-Use and adapt freely in your own projects unless a skill directory says otherwise.
+[MIT](LICENSE)

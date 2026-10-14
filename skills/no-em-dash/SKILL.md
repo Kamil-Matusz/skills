@@ -1,6 +1,9 @@
 ---
 name: no-em-dash
 description: Use whenever generating any prose, documentation, comments, commit messages, or other text output. Replaces em dashes (—) and en dashes (–) with regular hyphens (-). Apply proactively to all written output, even when the user does not explicitly ask about punctuation.
+metadata:
+  author: "Kamil Matusz"
+  version: "1.0"
 ---
 
 # No em dashes
