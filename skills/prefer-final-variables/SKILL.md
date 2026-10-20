@@ -1,7 +1,15 @@
 ---
 name: prefer-final-variables
-description: Mark Java variables `final` wherever it compiles and is meaningful — locals assigned once, method and constructor parameters, constructor-injected fields, `catch` parameters — while skipping the cases where `final` breaks Hibernate, Jackson or Spring proxies. Use whenever writing or editing Java code: controllers, services, repositories, mappers, DTOs, configuration classes.
-Also use when the user mentions "final", "immutability", "immutable", "effectively final", "code style", or asks to clean up / review Java code style. Apply proactively to code you are already touching, even when the user does not ask about style.
+description: >-
+  Mark Java variables `final` wherever it compiles and is meaningful — locals
+  assigned once, method and constructor parameters, constructor-injected fields,
+  `catch` parameters — while skipping the cases where `final` breaks Hibernate,
+  Jackson or Spring proxies. Use whenever writing or editing Java code:
+  controllers, services, repositories, mappers, DTOs, configuration classes.
+  Also use when the user mentions "final", "immutability", "immutable",
+  "effectively final", "code style", or asks to clean up / review Java code
+  style. Apply proactively to code you are already touching, even when the user
+  does not ask about style.
 metadata:
   author: "Kamil Matusz"
   version: "1.0"
