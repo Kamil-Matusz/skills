@@ -28,6 +28,12 @@ Each skill is a directory with a `SKILL.md`: YAML frontmatter (`name`, `descript
 | [context-budget](skills/context-budget/) | Measure how many tokens `AGENTS.md`, `CLAUDE.md` and skill descriptions load at startup and suggest what to trim or move. |
 | [no-em-dash](skills/no-em-dash/) | Replace em dashes and en dashes with regular hyphens (`-`) in all written output. |
 
+### Knowledge management
+
+| Skill | Description |
+|-------|-------------|
+| [brain-wiki](skills/brain-wiki/) | Maintain an Obsidian vault as an LLM Wiki (Karpathy pattern): ingest material, add notes, answer questions from the wiki and lint the vault. |
+
 ## Install
 
 ### Via `npx` (recommended)
